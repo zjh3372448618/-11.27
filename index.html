@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#07111f" />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <meta name="description" content="人形机器人生产车间数字化监控平台，实时掌握产线、测试、工位、动力与故障状态。" />
+    <title>人形机器人生产车间 · 总控监控平台</title>
+  </head>
+  <body>
+    <div id="app">
+      <aside class="sidebar" id="sidebar">
+        <a class="brand" href="#overview" aria-label="返回总控面板">
+          <span class="brand-mark"><i class="fa-solid fa-robot"></i></span>
+          <span><strong>HUMANOID</strong><small>智能制造控制中心</small></span>
+        </a>
+        <nav class="nav" aria-label="主导航">
+          <p class="nav-label">监控中心</p>
+          <a class="nav-item active" href="#overview"><i class="fa-solid fa-gauge-high"></i><span>产线总览</span><b>01</b></a>
+          <a class="nav-item" href="#walking"><i class="fa-solid fa-person-walking"></i><span>行走测试</span><b>02</b></a>
+          <a class="nav-item" href="#stations"><i class="fa-solid fa-industry"></i><span>工位监控</span><b>03</b></a>
+          <a class="nav-item" href="#parameters"><i class="fa-solid fa-wave-square"></i><span>核心参数</span><b>04</b></a>
+          <a class="nav-item" href="#analytics"><i class="fa-solid fa-chart-line"></i><span>生产分析</span><b>05</b></a>
+          <a class="nav-item" href="#alarms"><i class="fa-solid fa-triangle-exclamation"></i><span>故障追溯</span><b>06</b></a>
+        </nav>
+        <div class="sidebar-foot">
+          <div class="connection"><span class="pulse-dot"></span><span>实时数据通道</span><strong id="latency">18 ms</strong></div>
+          <p><i class="fa-solid fa-shield-halved"></i> 数据已加密 · 安全连接</p>
+        </div>
+      </aside>
+      <div class="mobile-mask" id="mobileMask"></div>
+      <div class="workspace">
+        <header class="topbar">
+          <div class="topbar-left">
+            <button class="menu-btn" id="menuBtn" aria-label="打开导航菜单" aria-expanded="false"><i class="fa-solid fa-bars"></i></button>
+            <div class="breadcrumb"><span>智能制造</span><i class="fa-solid fa-angle-right"></i><strong>人形机器人车间</strong></div>
+          </div>
+          <div class="topbar-right">
+            <span class="system-status"><span class="pulse-dot"></span>系统运行正常</span>
+            <span class="top-time" id="topTime">--:--:--</span>
+            <button class="icon-btn" aria-label="查看告警" id="alarmShortcut"><i class="fa-solid fa-bell"></i><span class="badge" id="alarmBadge">2</span></button>
+            <span class="avatar">OP</span>
+          </div>
+        </header>
+
+        <main>
+          <section class="hero page-section" id="overview" aria-labelledby="pageTitle">
+            <div class="hero-copy">
+              <span class="eyebrow"><span></span> PRODUCTION COMMAND CENTER</span>
+              <h1 id="pageTitle">人形机器人生产车间<br /><em>总控监控平台</em></h1>
+              <p>全链路感知生产状态，让每一台机器人高质量下线。</p>
+              <div class="hero-tags"><span><i class="fa-solid fa-location-dot"></i> R-001 智能产线</span><span><i class="fa-regular fa-calendar"></i> <span id="heroDate">--</span></span><span><i class="fa-solid fa-clock"></i> <span id="heroTime">--:--:--</span></span></div>
+            </div>
+            <div class="hero-visual" aria-hidden="true">
+              <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+              <div class="robot-core"><i class="fa-solid fa-robot"></i></div>
+              <span class="scan-line"></span>
+              <div class="visual-chip chip-a"><span></span> 产线在线 100%</div>
+              <div class="visual-chip chip-b"><i class="fa-solid fa-bolt"></i> 实时同步中</div>
+            </div>
+          </section>
+
+          <section class="kpi-grid page-section" aria-label="核心生产指标">
+            <article class="kpi-card"><div class="kpi-icon blue"><i class="fa-solid fa-robot"></i></div><div><p>运行机器人</p><strong><span data-live="running">15</span><small> 台</small></strong><span class="trend up"><i class="fa-solid fa-arrow-trend-up"></i> 较昨日 +2</span></div></article>
+            <article class="kpi-card"><div class="kpi-icon cyan"><i class="fa-solid fa-boxes-stacked"></i></div><div><p>当日产能</p><strong><span data-live="output">92</span><small> / 100 台</small></strong><span class="progress-mini"><i style="width:92%"></i></span></div></article>
+            <article class="kpi-card"><div class="kpi-icon green"><i class="fa-solid fa-circle-check"></i></div><div><p>整体良品率</p><strong><span data-live="yield">98.6</span><small> %</small></strong><span class="trend up"><i class="fa-solid fa-arrow-trend-up"></i> 高于目标 1.6%</span></div></article>
+            <article class="kpi-card"><div class="kpi-icon amber"><i class="fa-solid fa-triangle-exclamation"></i></div><div><p>故障设备</p><strong><span data-live="faults">2</span><small> 台</small></strong><span class="trend warn"><i class="fa-solid fa-circle-exclamation"></i> 需及时处理</span></div></article>
+          </section>
+
+          <section class="panel page-section" aria-labelledby="lineStatusTitle">
+            <div class="panel-heading"><div><span class="section-index">01</span><h2 id="lineStatusTitle">产线运行状态</h2></div><span class="status-pill normal"><span class="pulse-dot"></span>正常</span></div>
+            <div class="line-grid">
+              <div><span>产线编号</span><strong>R-001</strong></div><div><span>运行状态</span><strong class="text-green">稳定运行中</strong></div><div><span>当前工单</span><strong>WO-20261127-008</strong></div><div><span>节拍时间</span><strong>128 秒 / 台</strong></div>
+            </div>
+          </section>
+
+          <section class="page-section module" id="walking" aria-labelledby="walkingTitle">
+            <div class="section-heading"><div><span class="section-index">02</span><div><p class="kicker">WALKING TEST</p><h2 id="walkingTitle">行走测试监控</h2></div></div><span class="section-note">实时采集 · 每 3 秒刷新</span></div>
+            <div class="walking-grid" id="walkingGrid"></div>
+          </section>
+
+          <section class="page-section module" id="stations" aria-labelledby="stationsTitle">
+            <div class="section-heading"><div><span class="section-index">03</span><div><p class="kicker">PROCESS MONITOR</p><h2 id="stationsTitle">关键工位监控</h2></div></div><span class="section-note">工艺参数实时监测</span></div>
+            <div class="station-grid" id="stationGrid"></div>
+          </section>
+
+          <section class="page-section module" id="parameters" aria-labelledby="parametersTitle">
+            <div class="section-heading"><div><span class="section-index">04</span><div><p class="kicker">CORE PARAMETERS</p><h2 id="parametersTitle">动力与传感器核心参数</h2></div></div><span class="section-note">点击卡片查看近 10 分钟趋势</span></div>
+            <div class="panel parameter-panel">
+              <div class="filter-bar">
+                <div class="filter-group" role="group" aria-label="参数类型筛选"><button class="filter-btn active" data-type="all">全部参数</button><button class="filter-btn" data-type="power">动力</button><button class="filter-btn" data-type="sensor">传感器</button></div>
+                <label class="range-filter">数值范围 <input type="number" id="minValue" placeholder="最小值" aria-label="最小值" /> <span>—</span> <input type="number" id="maxValue" placeholder="最大值" aria-label="最大值" /><button id="rangeReset" class="small-btn">重置</button></label>
+                <select id="sortOrder" aria-label="参数排序"><option value="default">默认排序</option><option value="asc">数值升序</option><option value="desc">数值降序</option></select>
+              </div>
+              <div class="parameter-grid" id="parameterGrid"></div>
+            </div>
+          </section>
+
+          <section class="page-section module analytics-section" id="analytics" aria-labelledby="analyticsTitle">
+            <div class="section-heading"><div><span class="section-index">05</span><div><p class="kicker">PRODUCTION ANALYTICS</p><h2 id="analyticsTitle">生产效率与良品率</h2></div></div><select id="stationFilter" class="station-select" aria-label="工位筛选"><option value="all">全部工位</option><option value="walking">行走测试</option><option value="welding">焊接工位</option><option value="assembly">装配工位</option></select></div>
+            <div class="charts-grid">
+              <article class="panel chart-card chart-wide"><div class="chart-head"><div><h3>近 7 天各产线日产能</h3><p>单位：台</p></div><i class="fa-solid fa-chart-line"></i></div><div class="chart" id="capacityChart" role="img" aria-label="近7天各产线机器人日产能折线图"></div></article>
+              <article class="panel chart-card"><div class="chart-head"><div><h3>工段良品率占比</h3><p>按合格产品数量统计</p></div><i class="fa-solid fa-chart-pie"></i></div><div class="chart" id="qualityChart" role="img" aria-label="各工段良品率饼图"></div></article>
+              <article class="panel chart-card"><div class="chart-head"><div><h3>不同型号生产效率</h3><p>单位：台 / 小时</p></div><i class="fa-solid fa-chart-column"></i></div><div class="chart" id="modelChart" role="img" aria-label="不同型号机器人生产效率柱状图"></div></article>
+            </div>
+          </section>
+
+          <section class="page-section module" id="alarms" aria-labelledby="alarmsTitle">
+            <div class="section-heading"><div><span class="section-index">06</span><div><p class="kicker">FAULT TRACEABILITY</p><h2 id="alarmsTitle">故障告警与历史追溯</h2></div></div><button class="export-btn" id="exportBtn"><i class="fa-solid fa-file-export"></i> 导出 CSV</button></div>
+            <div class="panel alarm-panel">
+              <div class="alarm-toolbar"><div><span class="live-indicator"><span class="pulse-dot"></span>实时告警监听中</span><small>电机温度阈值 &gt; 80℃</small></div><div class="segmented" role="group" aria-label="故障时间筛选"><button class="active" data-range="today">今日</button><button data-range="7d">近 7 天</button><button data-range="30d">近 30 天</button></div></div>
+              <div class="table-wrap"><table><thead><tr><th>故障编号</th><th>设备 ID</th><th>故障类型</th><th>发生工段</th><th>发生时间</th><th>状态</th><th>操作</th></tr></thead><tbody id="faultTableBody"></tbody></table></div>
+            </div>
+          </section>
+
+          <section class="page-section" aria-labelledby="syncTitle">
+            <div class="panel sync-panel"><div><span class="section-index">07</span><h2 id="syncTitle">实时数据同步</h2><p>基于 WebSocket 协议的模拟数据推送，每 3 秒更新设备参数。</p></div><div class="sync-stats"><span><i class="fa-solid fa-tower-broadcast"></i> 推送频率 <strong>3 s</strong></span><span><i class="fa-solid fa-link"></i> 连接状态 <strong class="text-green">已连接</strong></span><span><i class="fa-solid fa-gauge-high"></i> 帧率 <strong>60 FPS</strong></span></div></div>
+          </section>
+          <footer><span>HUMANOID FACTORY OS · R-001</span><span>最后同步：<span id="lastSync">--:--:--</span></span></footer>
+        </main>
+      </div>
+    </div>
+
+    <div class="modal-backdrop" id="alarmModal" role="dialog" aria-modal="true" aria-labelledby="alarmModalTitle">
+      <div class="modal"><div class="modal-icon"><i class="fa-solid fa-triangle-exclamation"></i></div><p class="kicker">REAL-TIME ALERT</p><h2 id="alarmModalTitle">设备参数异常</h2><p class="modal-desc">监测到机器人参数超出安全阈值，请及时处理。</p><div class="alarm-detail" id="alarmDetail"></div><div class="modal-actions"><button class="btn secondary" id="ignoreAlarm">忽略</button><button class="btn primary" id="confirmAlarm"><i class="fa-solid fa-check"></i> 确认处理</button></div></div>
+    </div>
+
+    <div class="modal-backdrop" id="detailModal" role="dialog" aria-modal="true" aria-labelledby="detailModalTitle"><div class="modal detail-modal"><button class="modal-close" id="closeDetail" aria-label="关闭详情"><i class="fa-solid fa-xmark"></i></button><div id="detailContent"></div></div></div>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
